@@ -25,8 +25,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-#include "Enemy.h"
-#include "Player.h"
+#include "Board.h"
 #include <random>
 
 
@@ -42,8 +41,6 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	void DrawEnemy(int x, int y, int width, int height);
-	void DrawPlayer(int x, int y, int width, int height);
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -54,12 +51,8 @@ private:
 	std::mt19937 rng;
 	std::uniform_int_distribution<int> xDistrib;
 	std::uniform_int_distribution<int> yDistrib;
-	Player player;
-	Enemy enemies[30];
-	int rectx0 = 100;
-	int recty0 = 100;
-	int rectx1 = 200;
-	int recty1 = 200;
+
+	Board board;
 	
 	/********************************/
 };
