@@ -33,6 +33,7 @@ Game::Game( MainWindow& wnd )
 	board(gfx),
 	snake(gfx, board, {4, 4})
 {
+	snakeMoveFrame = 80;
 	appleLoc = { xDistrib(rng), yDistrib(rng) };
 }
 
@@ -53,21 +54,17 @@ void Game::UpdateModel()
 		if (wnd.kbd.KeyIsPressed('D') && !xLocked) {
 			moveDir = { 1, 0 };
 			xLocked = true;
-			yLocked = false;
 		}
 		if (wnd.kbd.KeyIsPressed('A') && !xLocked) {
 			moveDir = { -1, 0 };
 			xLocked = true;
-			yLocked = false;
 		}
 		if (wnd.kbd.KeyIsPressed('S') && !yLocked) {
 			moveDir = { 0, 1 };
-			xLocked = false;
 			yLocked = true;
 		}
 		if (wnd.kbd.KeyIsPressed('W') && !yLocked) {
 			moveDir = { 0, -1 };
-			xLocked = false;
 			yLocked = true;
 		}
 
@@ -75,10 +72,18 @@ void Game::UpdateModel()
 		if (snakeMoveCounter >= snakeMoveFrame) {
 			snakeMoveCounter = 0;
 			if (snake.GetHeadLocation() == appleLoc) {
+				if (snakeMoveFrame - 3 < minMoveFrame) {
+					snakeMoveFrame = minMoveFrame;
+				}
+				else {
+					snakeMoveFrame -= 3;
+				}
 				snake.Grow();
 				RandomizeAppleLocation();
 			}
 			snake.Move(moveDir);
+			if (moveDir.x != 0) yLocked = false;
+			if (moveDir.y != 0) xLocked = false;
 		}
 
 		

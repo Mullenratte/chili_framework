@@ -61,8 +61,9 @@ private:
 	Location moveDir = { 1, 0 };
 	bool xLocked = false;
 	bool yLocked = false;
-	static constexpr int snakeMoveFrame = 30;
+	int snakeMoveFrame;
 	int snakeMoveCounter = 0;
+	static constexpr int minMoveFrame = 5;
 	bool isGameOver = false;
 
 	Location currentGameOverPixel = { 0, 0 };

@@ -9,8 +9,8 @@ public:
 	void DrawCellAtLocation(const Location& location, Color c);
 	void DrawBorder();
 	bool IsInsideBorder(const Location& location) const;
-	static constexpr int width = 25;
-	static constexpr int height = 25;
+	static constexpr int width = 40;
+	static constexpr int height = 40;
 private:
 	static constexpr int cellSize = 20;
 
