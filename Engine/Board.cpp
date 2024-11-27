@@ -1,16 +1,33 @@
 #include "Board.h"
 #include "Graphics.h"
+#include <cassert>
 
 
-void Board::DrawRectAtPosition(Graphics& gfx, Location location)
+Board::Board(Graphics& gfx)
+	:
+	gfx(gfx)
 {
-	gfx.DrawRectWH(location.x, location.y, Board::gridSize, Board::gridSize, Colors::White);
+	
 }
 
-void Board::DrawBorder(Graphics& gfx)
+void Board::DrawCellAtLocation(const Location& location, Color c)
 {
-	gfx.DrawRect(0, 0, gfx.ScreenWidth, Board::gridSize, borderColor);
-	gfx.DrawRect(0, 0, Board::gridSize, gfx.ScreenHeight, borderColor);
-	gfx.DrawRect(0, gfx.ScreenHeight, gfx.ScreenWidth, gfx.ScreenHeight - Board::gridSize, borderColor);
-	gfx.DrawRect(gfx.ScreenWidth, 0, gfx.ScreenWidth - Board::gridSize, gfx.ScreenHeight, borderColor);
+	assert(location.x >= 0);
+	assert(location.x < width);
+	assert(location.y >= 0);
+	assert(location.y < height);
+	gfx.DrawRectWH(location.x * cellSize, location.y * cellSize, cellSize, cellSize, c);
+}
+
+void Board::DrawBorder()
+{
+	gfx.DrawRect(0, 0, width * Board::cellSize, Board::cellSize, borderColor);
+	gfx.DrawRect(0, 0, Board::cellSize, height * Board::cellSize, borderColor);
+	gfx.DrawRect(0, height * Board::cellSize, width * Board::cellSize, width * Board::cellSize - Board::cellSize, borderColor);
+	gfx.DrawRect(width * Board::cellSize - Board::cellSize, 0, width * Board::cellSize, height * Board::cellSize, borderColor);
+}
+
+bool Board::IsInsideBorder(const Location& location) const
+{
+	return location.x > 0 && location.x < width && location.y > 0 && location.y < height;
 }

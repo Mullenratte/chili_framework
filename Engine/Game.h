@@ -27,6 +27,7 @@
 #include "Graphics.h"
 #include "Board.h"
 #include <random>
+#include "Snake.h"
 
 
 class Game
@@ -36,11 +37,13 @@ public:
 	Game( const Game& ) = delete;
 	Game& operator=( const Game& ) = delete;
 	void Go();
+
 private:
 	void ComposeFrame();
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
+	void RandomizeAppleLocation();
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -53,6 +56,18 @@ private:
 	std::uniform_int_distribution<int> yDistrib;
 
 	Board board;
-	
+	Snake snake;
+	Location appleLoc = { xDistrib(rng), yDistrib(rng) };
+	Location moveDir = { 1, 0 };
+	bool xLocked = false;
+	bool yLocked = false;
+	static constexpr int snakeMoveFrame = 30;
+	int snakeMoveCounter = 0;
+	bool isGameOver = false;
+
+	Location currentGameOverPixel = { 0, 0 };
+	static constexpr int drawGameOverFrame = 10;
+	int drawGameOverCounter = 0;
+
 	/********************************/
 };

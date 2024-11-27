@@ -28,10 +28,12 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	rng(rd()),
-	xDistrib(50, 750),
-	yDistrib(50, 550)
+	xDistrib(1, 18),
+	yDistrib(1, 18),
+	board(gfx),
+	snake(gfx, board, {4, 4})
 {
-
+	appleLoc = { xDistrib(rng), yDistrib(rng) };
 }
 
 void Game::Go()
@@ -44,32 +46,87 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if (wnd.kbd.KeyIsPressed('D')) {
+	if (snake.isDead) {
+		isGameOver = true;
 	}
-	if (wnd.kbd.KeyIsPressed('A')) {
+	if (!isGameOver) {
+		if (wnd.kbd.KeyIsPressed('D') && !xLocked) {
+			moveDir = { 1, 0 };
+			xLocked = true;
+			yLocked = false;
+		}
+		if (wnd.kbd.KeyIsPressed('A') && !xLocked) {
+			moveDir = { -1, 0 };
+			xLocked = true;
+			yLocked = false;
+		}
+		if (wnd.kbd.KeyIsPressed('S') && !yLocked) {
+			moveDir = { 0, 1 };
+			xLocked = false;
+			yLocked = true;
+		}
+		if (wnd.kbd.KeyIsPressed('W') && !yLocked) {
+			moveDir = { 0, -1 };
+			xLocked = false;
+			yLocked = true;
+		}
+
+		snakeMoveCounter++;
+		if (snakeMoveCounter >= snakeMoveFrame) {
+			snakeMoveCounter = 0;
+			if (snake.GetHeadLocation() == appleLoc) {
+				snake.Grow();
+				RandomizeAppleLocation();
+			}
+			snake.Move(moveDir);
+		}
+
+		
+		
+
+		snake.Update();
 	}
-	if (wnd.kbd.KeyIsPressed('S')) {
-	}
-	if (wnd.kbd.KeyIsPressed('W')) {
+	else {
+		// Draw Game Over Screen
+		for (int y = 0; y <= currentGameOverPixel.y; y++) {
+			for (int x = 0; x <= currentGameOverPixel.x; x++) {
+				board.DrawCellAtLocation({ x, y }, Colors::Red);
+			}
+		}
+
+		drawGameOverCounter++;
+		if (drawGameOverCounter >= drawGameOverFrame) {
+			drawGameOverCounter = 0;
+			if (currentGameOverPixel.x < board.width - 1|| currentGameOverPixel.y < board.height - 1) {
+				if (currentGameOverPixel.x < board.width - 1) {
+					currentGameOverPixel.x += 1;
+				}
+				else {
+					currentGameOverPixel.y += 1;
+				}
+			}
+		}
 	}
 
-	if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
-	}
-	if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
-	}
-	if (wnd.kbd.KeyIsPressed(VK_DOWN)) {
-	}
-	if (wnd.kbd.KeyIsPressed(VK_UP)) {
-		
-	}
-	if (wnd.kbd.KeyIsPressed('F'))
-	{
-		// DEBUG HERE
-	}
 }
+
+
 
 void Game::ComposeFrame()
 {
-	board.DrawBorder(gfx);
-	board.DrawRectAtPosition(gfx, {150, 150});
+	if (!isGameOver) {
+		board.DrawBorder();
+
+		board.DrawCellAtLocation(appleLoc, Colors::Red);
+
+		snake.Draw(board);
+
+		
+	}
+
+}
+
+void Game::RandomizeAppleLocation()
+{
+	appleLoc = { xDistrib(rng), yDistrib(rng) };
 }
