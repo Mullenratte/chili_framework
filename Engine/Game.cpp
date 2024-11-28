@@ -22,6 +22,7 @@
 #include "Game.h"
 #include <random>
 #include <iostream>
+#include <chrono>
 
 Game::Game( MainWindow& wnd )
 	:
@@ -47,6 +48,9 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	using std::chrono::steady_clock;
+	steady_clock::time_point start = steady_clock::now();
+
 	if (snake.isDead) {
 		isGameOver = true;
 	}
@@ -90,6 +94,10 @@ void Game::UpdateModel()
 		
 
 		snake.Update();
+
+		steady_clock::time_point end = steady_clock::now();
+		std::chrono::duration<float> runDuration = end - start;
+		deltaTime = runDuration.count();
 	}
 	else {
 		// Draw Game Over Screen
@@ -119,6 +127,7 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+
 	if (!isGameOver) {
 		board.DrawBorder();
 
@@ -128,7 +137,7 @@ void Game::ComposeFrame()
 
 		
 	}
-
+	gfx.DrawCircle(200, 200, 50, Colors::Green);
 }
 
 void Game::RandomizeAppleLocation()

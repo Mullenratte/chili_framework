@@ -61,7 +61,7 @@ private:
 	Location moveDir = { 1, 0 };
 	bool xLocked = false;
 	bool yLocked = false;
-	int snakeMoveFrame;
+	float snakeMoveFrame;
 	int snakeMoveCounter = 0;
 	static constexpr int minMoveFrame = 5;
 	bool isGameOver = false;
@@ -69,6 +69,8 @@ private:
 	Location currentGameOverPixel = { 0, 0 };
 	static constexpr int drawGameOverFrame = 10;
 	int drawGameOverCounter = 0;
+
+	float deltaTime = 0;
 
 	/********************************/
 };
