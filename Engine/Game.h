@@ -25,9 +25,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-#include "Board.h"
 #include <random>
-#include "Snake.h"
 
 
 class Game
@@ -43,7 +41,6 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	void RandomizeAppleLocation();
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -55,22 +52,7 @@ private:
 	std::uniform_int_distribution<int> xDistrib;
 	std::uniform_int_distribution<int> yDistrib;
 
-	Board board;
-	Snake snake;
-	Location appleLoc = { xDistrib(rng), yDistrib(rng) };
-	Location moveDir = { 1, 0 };
-	bool xLocked = false;
-	bool yLocked = false;
-	float snakeMoveFrame;
-	int snakeMoveCounter = 0;
-	static constexpr int minMoveFrame = 5;
-	bool isGameOver = false;
-
-	Location currentGameOverPixel = { 0, 0 };
-	static constexpr int drawGameOverFrame = 10;
-	int drawGameOverCounter = 0;
-
-	float deltaTime = 0;
+	float deltaTime;
 
 	/********************************/
 };

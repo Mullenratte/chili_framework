@@ -30,12 +30,9 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	rng(rd()),
 	xDistrib(1, 18),
-	yDistrib(1, 18),
-	board(gfx),
-	snake(gfx, board, {4, 4})
+	yDistrib(1, 18)
 {
-	snakeMoveFrame = 80;
-	appleLoc = { xDistrib(rng), yDistrib(rng) };
+
 }
 
 void Game::Go()
@@ -51,76 +48,10 @@ void Game::UpdateModel()
 	using std::chrono::steady_clock;
 	steady_clock::time_point start = steady_clock::now();
 
-	if (snake.isDead) {
-		isGameOver = true;
-	}
-	if (!isGameOver) {
-		if (wnd.kbd.KeyIsPressed('D') && !xLocked) {
-			moveDir = { 1, 0 };
-			xLocked = true;
-		}
-		if (wnd.kbd.KeyIsPressed('A') && !xLocked) {
-			moveDir = { -1, 0 };
-			xLocked = true;
-		}
-		if (wnd.kbd.KeyIsPressed('S') && !yLocked) {
-			moveDir = { 0, 1 };
-			yLocked = true;
-		}
-		if (wnd.kbd.KeyIsPressed('W') && !yLocked) {
-			moveDir = { 0, -1 };
-			yLocked = true;
-		}
 
-		snakeMoveCounter++;
-		if (snakeMoveCounter >= snakeMoveFrame) {
-			snakeMoveCounter = 0;
-			if (snake.GetHeadLocation() == appleLoc) {
-				if (snakeMoveFrame - 3 < minMoveFrame) {
-					snakeMoveFrame = minMoveFrame;
-				}
-				else {
-					snakeMoveFrame -= 3;
-				}
-				snake.Grow();
-				RandomizeAppleLocation();
-			}
-			snake.Move(moveDir);
-			if (moveDir.x != 0) yLocked = false;
-			if (moveDir.y != 0) xLocked = false;
-		}
-
-		
-		
-
-		snake.Update();
-
-		steady_clock::time_point end = steady_clock::now();
-		std::chrono::duration<float> runDuration = end - start;
-		deltaTime = runDuration.count();
-	}
-	else {
-		// Draw Game Over Screen
-		for (int y = 0; y <= currentGameOverPixel.y; y++) {
-			for (int x = 0; x <= currentGameOverPixel.x; x++) {
-				board.DrawCellAtLocation({ x, y }, Colors::Red);
-			}
-		}
-
-		drawGameOverCounter++;
-		if (drawGameOverCounter >= drawGameOverFrame) {
-			drawGameOverCounter = 0;
-			if (currentGameOverPixel.x < board.width - 1|| currentGameOverPixel.y < board.height - 1) {
-				if (currentGameOverPixel.x < board.width - 1) {
-					currentGameOverPixel.x += 1;
-				}
-				else {
-					currentGameOverPixel.y += 1;
-				}
-			}
-		}
-	}
-
+	steady_clock::time_point end = steady_clock::now();
+	std::chrono::duration<float> runDuration = end - start;
+	deltaTime = runDuration.count();
 }
 
 
@@ -128,19 +59,4 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 
-	if (!isGameOver) {
-		board.DrawBorder();
-
-		board.DrawCellAtLocation(appleLoc, Colors::Red);
-
-		snake.Draw(board);
-
-		
-	}
-	gfx.DrawCircle(200, 200, 50, Colors::Green);
-}
-
-void Game::RandomizeAppleLocation()
-{
-	appleLoc = { xDistrib(rng), yDistrib(rng) };
 }
