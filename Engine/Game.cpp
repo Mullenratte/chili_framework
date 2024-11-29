@@ -32,10 +32,10 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	rng(rd()),
-	xDistrib(1, 18),
-	yDistrib(1, 18),
-	ball(Vec2(450, 750), Vec2(350, 350), Colors::White),
-	walls(0.0f, Graphics::ScreenWidth, 0.0f, Graphics::ScreenHeight)
+	audioParam(0.0f, 0.3f),
+	ball(Vec2(450, 750), Vec2(600, 600), Colors::White),
+	walls(0.0f, Graphics::ScreenWidth, 0.0f, Graphics::ScreenHeight),
+	sound_bounce(L"Sounds\\bounce.wav")
 {
 	
 }
@@ -54,7 +54,10 @@ void Game::UpdateModel()
 
 
 	ball.Update(deltaTime);
-	ball.HandleWallCollision(walls);
+	if (ball.HandleWallCollision(walls)) {
+		float randPitch = 0.85f + audioParam(rng);
+		sound_bounce.Play(randPitch, 0.4f);
+	}
 }
 
 

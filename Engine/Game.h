@@ -29,6 +29,7 @@
 #include "Brick.h"
 #include "Ball.h"
 #include "FrameTimer.h"
+#include "Sound.h"
 
 class Game
 {
@@ -52,13 +53,15 @@ private:
 	FrameTimer ft;
 	std::random_device rd;
 	std::mt19937 rng;
-	std::uniform_int_distribution<int> xDistrib;
-	std::uniform_int_distribution<int> yDistrib;
+	std::uniform_real_distribution<float> audioParam;
 
 
 	Ball ball;
 	RectF walls;
 	float deltaTime;
+
+
+	Sound sound_bounce;
 
 	/********************************/
 };
