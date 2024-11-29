@@ -23,6 +23,9 @@
 #include <random>
 #include <iostream>
 #include <chrono>
+#include "RectF.h"
+#include "Brick.h"
+#include "Ball.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -30,9 +33,11 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	rng(rd()),
 	xDistrib(1, 18),
-	yDistrib(1, 18)
+	yDistrib(1, 18),
+	ball(Vec2(450, 750), Vec2(350, 350), Colors::White),
+	walls(0.0f, Graphics::ScreenWidth, 0.0f, Graphics::ScreenHeight)
 {
-
+	
 }
 
 void Game::Go()
@@ -45,18 +50,20 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	using std::chrono::steady_clock;
-	steady_clock::time_point start = steady_clock::now();
+	deltaTime = ft.Mark();
 
 
-	steady_clock::time_point end = steady_clock::now();
-	std::chrono::duration<float> runDuration = end - start;
-	deltaTime = runDuration.count();
+	ball.Update(deltaTime);
+	ball.HandleWallCollision(walls);
 }
 
 
 
 void Game::ComposeFrame()
 {
+	Brick brick(RectF(20, 80, 20, 40), Colors::Cyan);
+	brick.Draw(gfx);
 
+	ball.Draw(gfx);
+	
 }

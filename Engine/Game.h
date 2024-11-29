@@ -26,7 +26,9 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include <random>
-
+#include "Brick.h"
+#include "Ball.h"
+#include "FrameTimer.h"
 
 class Game
 {
@@ -47,11 +49,15 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	FrameTimer ft;
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_int_distribution<int> xDistrib;
 	std::uniform_int_distribution<int> yDistrib;
 
+
+	Ball ball;
+	RectF walls;
 	float deltaTime;
 
 	/********************************/
