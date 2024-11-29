@@ -23,3 +23,8 @@ bool RectF::IsOverlappingWith(const RectF& other) const
 	return (right >= other.left && left <= other.right
 		 && top <= other.bottom && bottom >= other.top);
 }
+
+RectF RectF::FromCenter(const Vec2& center, float halfWidth, float halfHeight)
+{
+	return RectF(center.x - halfWidth, center.x + halfWidth, center.y - halfHeight, center.y + halfHeight);
+}
