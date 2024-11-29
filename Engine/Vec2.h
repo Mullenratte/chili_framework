@@ -9,6 +9,10 @@ public:
 	Vec2& operator+=(const Vec2& b);
 	Vec2 operator*(float b) const;
 	Vec2& operator*=(float b);
+	Vec2& Normalize();
+	Vec2 GetNormalized();
+	float GetLength(); 
+	float GetLengthSquared();
 private:
 	float x;
 	float y;
