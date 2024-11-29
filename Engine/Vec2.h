@@ -10,10 +10,10 @@ public:
 	Vec2 operator*(float b) const;
 	Vec2& operator*=(float b);
 	Vec2& Normalize();
-	Vec2 GetNormalized();
-	float GetLength(); 
-	float GetLengthSquared();
-private:
+	Vec2 GetNormalized() const;
+	float GetLength() const; 
+	float GetLengthSquared() const;
+public:
 	float x;
 	float y;
 };

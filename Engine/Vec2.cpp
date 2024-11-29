@@ -33,21 +33,21 @@ Vec2& Vec2::Normalize()
 	return *this = GetNormalized();
 }
 
-Vec2 Vec2::GetNormalized()
+Vec2 Vec2::GetNormalized() const
 {
 	float length = GetLength();
-	if (length != 0) {
+	if (length != 0.0f) {
 		return *this * (1.0f / length);
 	}
 	return *this;
 }
 
-float Vec2::GetLength()
+float Vec2::GetLength() const
 {
 	return sqrt(GetLengthSquared());
 }
 
-float Vec2::GetLengthSquared()
+float Vec2::GetLengthSquared() const
 {
 	return x * x + y * y;
 }
