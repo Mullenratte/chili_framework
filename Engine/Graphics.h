@@ -63,7 +63,7 @@ public:
 		DrawRect(x0, y0, x0+width, y0+height, c);
 	};
 	void DrawRect(const RectF& rect, Color c) {
-		DrawRect(rect.left, rect.top, rect.right, rect.bottom, c);
+		DrawRect((int)rect.left, (int)rect.top, (int)rect.right, (int)rect.bottom, c);
 	};
 	void DrawCircle(int x, int y, int radius, Color c);
 	void DrawCircle(const Vec2& center, int radius, Color c) {

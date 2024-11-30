@@ -27,15 +27,18 @@
 #include "Brick.h"
 #include "Ball.h"
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd ),
+	wnd(wnd),
+	gfx(wnd),
 	rng(rd()),
 	audioParam(0.0f, 0.3f),
-	ball(Vec2(450, 750), Vec2(600, 600), Colors::White),
+	ball(Vec2(450, 750), Vec2(100, 400), Colors::White),
 	walls(0.0f, Graphics::ScreenWidth, 0.0f, Graphics::ScreenHeight),
-	sound_bounce(L"Sounds\\bounce.wav")
+	brick(RectF(400, 480, 400, 420), 2, Colors::Cyan),
+	sound_bounce(L"Sounds\\bounce.wav"),
+	sound_hitBrick(L"Sounds\\hitBrick.wav"),
+	paddle(Vec2(400, 720), 40.0f, 10.0f, Colors::White)
 {
 	
 }
@@ -52,11 +55,22 @@ void Game::UpdateModel()
 {
 	deltaTime = ft.Mark();
 
-
 	ball.Update(deltaTime);
+
+	paddle.Update(wnd.kbd, deltaTime);
+	paddle.HandleBallCollision(ball);
+	paddle.HandleWallCollision(walls);
+
+
+
+	// AUDIO
+	float randPitch = 0.85f + audioParam(rng);
+	if (brick.HandleBallCollision(ball)) {
+		sound_hitBrick.Play(randPitch, 0.1f);
+	}
+
 	if (ball.HandleWallCollision(walls)) {
-		float randPitch = 0.85f + audioParam(rng);
-		sound_bounce.Play(randPitch, 0.4f);
+		sound_bounce.Play(randPitch, 0.25f);
 	}
 }
 
@@ -64,7 +78,7 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	Brick brick(RectF(20, 80, 20, 40), Colors::Cyan);
+	paddle.Draw(gfx);
 	brick.Draw(gfx);
 
 	ball.Draw(gfx);

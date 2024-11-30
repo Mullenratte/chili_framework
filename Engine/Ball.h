@@ -11,7 +11,6 @@ public:
 	void Update(float dt);
 	bool HandleWallCollision(const RectF& wall);
 	RectF GetRectCollider() const;
-private:
 	void ReboundX();
 	void ReboundY();
 private:

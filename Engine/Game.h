@@ -30,6 +30,8 @@
 #include "Ball.h"
 #include "FrameTimer.h"
 #include "Sound.h"
+#include "Paddle.h"
+#include "Keyboard.h"
 
 class Game
 {
@@ -51,17 +53,20 @@ private:
 	/********************************/
 	/*  User Variables              */
 	FrameTimer ft;
+
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_real_distribution<float> audioParam;
 
-
+	Paddle paddle;
 	Ball ball;
+	Brick brick;
 	RectF walls;
 	float deltaTime;
 
 
 	Sound sound_bounce;
+	Sound sound_hitBrick;
 
 	/********************************/
 };
