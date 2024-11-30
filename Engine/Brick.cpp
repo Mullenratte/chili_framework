@@ -6,8 +6,8 @@
 Brick::Brick(const RectF& rect_in, int maxHealth, Color c)
 	:	
 	rect(rect_in),
-	color(c),
-	health(maxHealth)
+	health(maxHealth),
+	color(c)	
 {
 }
 

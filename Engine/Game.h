@@ -32,6 +32,7 @@
 #include "Sound.h"
 #include "Paddle.h"
 #include "Keyboard.h"
+#include "RectF.h"
 
 class Game
 {
@@ -57,12 +58,20 @@ private:
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_real_distribution<float> audioParam;
+	float deltaTime;
 
 	Paddle paddle;
 	Ball ball;
-	Brick brick;
 	RectF walls;
-	float deltaTime;
+
+	Vec2 brickStartPos = { 150, 150 };
+	static constexpr int brickRows = 4;
+	static constexpr int brickCols = 8;
+	static constexpr int totalBricks = brickRows * brickCols;
+	static constexpr float brickWidth = 35;
+	static constexpr float brickHeight = 20;
+	Color rowColors[brickRows] = { Colors::Blue, Colors::Cyan, Colors::Gray, Colors::LightGray };
+	Brick bricks[totalBricks];
 
 
 	Sound sound_bounce;

@@ -33,14 +33,24 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	rng(rd()),
 	audioParam(0.0f, 0.3f),
+	paddle(Vec2(400, 720), 40.0f, 10.0f, Colors::White),
 	ball(Vec2(450, 750), Vec2(100, 400), Colors::White),
 	walls(0.0f, Graphics::ScreenWidth, 0.0f, Graphics::ScreenHeight),
-	brick(RectF(400, 480, 400, 420), 2, Colors::Cyan),
 	sound_bounce(L"Sounds\\bounce.wav"),
-	sound_hitBrick(L"Sounds\\hitBrick.wav"),
-	paddle(Vec2(400, 720), 40.0f, 10.0f, Colors::White)
+	sound_hitBrick(L"Sounds\\hitBrick.wav")
 {
-	
+	for (int y = 0; y < brickRows; y++) {
+		Color c = rowColors[y];
+		int health = brickRows - y;
+		for (int x = 0; x < brickCols; x++) {
+			Vec2 test = Vec2(x * brickWidth, y * brickHeight);
+			RectF test2 = RectF(brickStartPos + Vec2(x * brickWidth, y * brickHeight), brickWidth, brickHeight);
+			bricks[y * brickCols + x] = Brick(RectF(
+				brickStartPos + Vec2(x * brickWidth, y * brickHeight), brickWidth, brickHeight),
+				health, 
+				c);
+		}
+	}
 }
 
 void Game::Go()
@@ -65,9 +75,12 @@ void Game::UpdateModel()
 
 	// AUDIO
 	float randPitch = 0.85f + audioParam(rng);
-	if (brick.HandleBallCollision(ball)) {
-		sound_hitBrick.Play(randPitch, 0.1f);
+	for (Brick& brick : bricks) {
+		if (brick.HandleBallCollision(ball)) {
+			sound_hitBrick.Play(randPitch, 0.1f);
+		}
 	}
+
 
 	if (ball.HandleWallCollision(walls)) {
 		sound_bounce.Play(randPitch, 0.25f);
@@ -79,7 +92,9 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 	paddle.Draw(gfx);
-	brick.Draw(gfx);
+	for (Brick& brick : bricks) {
+		brick.Draw(gfx);
+	}
 
 	ball.Draw(gfx);
 	
