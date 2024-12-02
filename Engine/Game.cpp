@@ -68,13 +68,16 @@ void Game::UpdateModel()
 	ball.Update(deltaTime);
 
 	paddle.Update(wnd.kbd, deltaTime);
-	paddle.HandleBallCollision(ball);
 	paddle.HandleWallCollision(walls);
 
 
 
-	// AUDIO
+	// AUDIO & COLLISION
 	float randPitch = 0.85f + audioParam(rng);
+	if (paddle.HandleBallCollision(ball)) {
+		sound_bounce.Play(randPitch + 0.6f, 0.15f);
+	}
+
 	for (Brick& brick : bricks) {
 		if (brick.HandleBallCollision(ball)) {
 			sound_hitBrick.Play(randPitch, 0.1f);

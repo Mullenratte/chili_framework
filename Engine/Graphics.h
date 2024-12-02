@@ -65,6 +65,9 @@ public:
 	void DrawRect(const RectF& rect, Color c) {
 		DrawRect((int)rect.left, (int)rect.top, (int)rect.right, (int)rect.bottom, c);
 	};
+	void DrawRectPadding(const RectF& rect, float padding, Color c) {
+		DrawRect(RectF(rect.left + padding, rect.right - padding, rect.top + padding, rect.bottom - padding), c);
+	}
 	void DrawCircle(int x, int y, int radius, Color c);
 	void DrawCircle(const Vec2& center, int radius, Color c) {
 		DrawCircle(center.x, center.y, radius, c);

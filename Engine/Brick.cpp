@@ -14,7 +14,7 @@ Brick::Brick(const RectF& rect_in, int maxHealth, Color c)
 void Brick::Draw(Graphics& graphics) const
 {
 	if (!destroyed) {
-		graphics.DrawRect(rect, color);
+		graphics.DrawRectPadding(rect, 2.0f, color);
 	}
 }
 
