@@ -64,12 +64,12 @@ private:
 	Ball ball;
 	RectF walls;
 
-	Vec2 brickStartPos = { 150, 150 };
+	Vec2 brickStartPos = { 100, 150 };
 	static constexpr int brickRows = 4;
-	static constexpr int brickCols = 8;
+	static constexpr int brickCols = 13;
 	static constexpr int totalBricks = brickRows * brickCols;
-	static constexpr float brickWidth = 35;
-	static constexpr float brickHeight = 20;
+	static constexpr float brickWidth = 45;
+	static constexpr float brickHeight = 25;
 	Color rowColors[brickRows] = { Colors::Blue, Colors::Cyan, Colors::Gray, Colors::LightGray };
 	Brick bricks[totalBricks];
 
