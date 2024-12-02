@@ -16,9 +16,12 @@ public:
 	void AddVelocity(const Vec2& vel);
 private:
 	static constexpr float radius = 8.0f;
+	static constexpr float maxVelX = 1000.0f;
+	static constexpr float maxVelY = 1000.0f;
 	Vec2 center;
 	Color color;
 	Vec2 velocity;
+
 	
 };
 

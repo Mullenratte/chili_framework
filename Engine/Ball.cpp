@@ -1,4 +1,5 @@
 #include "Ball.h"
+#include "math.h"
 
 Ball::Ball(const Vec2& center_in, const Vec2& velocity_in, Color c)
 	:
@@ -15,6 +16,12 @@ void Ball::Draw(Graphics& graphics)
 
 void Ball::Update(float dt)
 {
+	if (abs(velocity.x) > maxVelX) {
+		velocity.x = (velocity.x / abs(velocity.x)) * maxVelX;
+	} 
+	if (abs(velocity.y) > maxVelY) {
+		velocity.y = (velocity.y / abs(velocity.y)) * maxVelY;
+	}
 	center += velocity * dt;
 }
 
