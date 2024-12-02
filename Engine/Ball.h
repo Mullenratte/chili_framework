@@ -13,6 +13,7 @@ public:
 	RectF GetRectCollider() const;
 	void ReboundX();
 	void ReboundY();
+	void AddVelocity(const Vec2& vel);
 private:
 	static constexpr float radius = 8.0f;
 	Vec2 center;

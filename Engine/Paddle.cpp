@@ -4,7 +4,7 @@
 Paddle::Paddle(const Vec2& pos, float halfW, float halfH, Color c)
 	:
 	position(pos),
-	velocity({0, 0}),
+	direction({0, 0}),
 	halfWidth(halfW),
 	halfHeight(halfH),
 	color(c)
@@ -14,16 +14,16 @@ Paddle::Paddle(const Vec2& pos, float halfW, float halfH, Color c)
 void Paddle::Update(Keyboard& kbd, float dt)
 {
 	if (kbd.KeyIsPressed('A')) {
-		velocity = Vec2(-1, 0);
+		direction = Vec2(-1, 0);
 
 	}
 	else if (kbd.KeyIsPressed('D')) {
-		velocity = Vec2(1, 0);
+		direction = Vec2(1, 0);
 	}
 	else {
-		velocity = Vec2(0, 0);
+		direction = Vec2(0, 0);
 	}
-	position.x += velocity.x * moveSpeed * dt;
+	position.x += direction.x * moveSpeed * dt;
 }
 
 void Paddle::Draw(Graphics& gfx)
@@ -45,6 +45,7 @@ bool Paddle::HandleBallCollision(Ball& ball)
 	RectF& ballRect = ball.GetRectCollider();
 	if (GetRect().IsOverlappingWith(ballRect)) {
 		ball.ReboundY();
+		ball.AddVelocity(direction * moveSpeed);	// does not consider angle of collision yet
 		collided = true;
 	}	
 

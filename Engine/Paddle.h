@@ -18,7 +18,7 @@ public:
 private:
 	Color color;
 	Vec2 position;
-	Vec2 velocity;
+	Vec2 direction;
 	static constexpr float moveSpeed = 250.0f;
 	float halfWidth;
 	float halfHeight;

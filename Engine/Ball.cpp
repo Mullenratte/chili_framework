@@ -60,3 +60,8 @@ void Ball::ReboundY()
 {
 	velocity.y = -velocity.y;
 }
+
+void Ball::AddVelocity(const Vec2& vel)
+{
+	velocity += vel;
+}
