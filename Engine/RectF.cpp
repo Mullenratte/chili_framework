@@ -31,3 +31,8 @@ RectF RectF::FromCenter(const Vec2& center, float halfWidth, float halfHeight)
 {
 	return RectF(center.x - halfWidth, center.x + halfWidth, center.y - halfHeight, center.y + halfHeight);
 }
+
+Vec2& RectF::GetCenter()
+{
+	return Vec2(right, bottom) + (Vec2(left, top)) * 0.5f;
+}
