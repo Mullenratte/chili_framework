@@ -33,7 +33,7 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	rng(rd()),
 	audioParam(0.0f, 0.3f),
-	paddle(Vec2(400, 720), 40.0f, 10.0f, Colors::White),
+	paddle(Vec2(400, 720), 40.0f, 5.0f, Colors::White),
 	ball(Vec2(450, 750), Vec2(100, 400), Colors::White),
 	walls(0.0f, Graphics::ScreenWidth, 0.0f, Graphics::ScreenHeight),
 	sound_bounce(L"Sounds\\bounce.wav"),
