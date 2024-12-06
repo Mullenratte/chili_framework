@@ -18,6 +18,16 @@ Vec2& Vec2::operator+=(const Vec2& b)
 	return *this = *this + b;
 }
 
+Vec2 Vec2::operator-(const Vec2& b) const
+{
+	return Vec2(x - b.x, y - b.y);
+}
+
+Vec2& Vec2::operator-=(const Vec2& b)
+{
+	return *this = *this - b;
+}
+
 Vec2 Vec2::operator*(float b) const
 {
 	return Vec2(x * b, y * b);
@@ -50,4 +60,9 @@ float Vec2::GetLength() const
 float Vec2::GetLengthSquared() const
 {
 	return x * x + y * y;
+}
+
+Vec2 Vec2::CrossProduct(const Vec2& b) const
+{
+	return Vec2(x - b.y, y - b.x);
 }
