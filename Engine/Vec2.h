@@ -16,6 +16,7 @@ public:
 	float GetLength() const; 
 	float GetLengthSquared() const;
 	Vec2 CrossProduct(const Vec2& b) const;
+	float DotProduct(const Vec2& b) const;
 public:
 	float x;
 	float y;

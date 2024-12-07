@@ -66,3 +66,8 @@ Vec2 Vec2::CrossProduct(const Vec2& b) const
 {
 	return Vec2(x - b.y, y - b.x);
 }
+
+float Vec2::DotProduct(const Vec2& b) const
+{
+	return x * b.x + y * b.y;
+}
