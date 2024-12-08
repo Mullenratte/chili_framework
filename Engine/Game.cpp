@@ -43,8 +43,6 @@ Game::Game(MainWindow& wnd)
 		Color c = rowColors[y];
 		int health = brickRows - y;
 		for (int x = 0; x < brickCols; x++) {
-			Vec2 test = Vec2(x * brickWidth, y * brickHeight);
-			RectF test2 = RectF(brickStartPos + Vec2(x * brickWidth, y * brickHeight), brickWidth, brickHeight);
 			bricks[y * brickCols + x] = Brick(RectF(
 				brickStartPos + Vec2(x * brickWidth, y * brickHeight), brickWidth, brickHeight),
 				health, 

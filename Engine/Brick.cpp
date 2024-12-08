@@ -25,8 +25,25 @@ bool Brick::HandleBallCollision(Ball& ball)
 		if (health <= 0) destroyed = true;
 
 		RectF& ballRect = ball.GetRectCollider();
+		Vec2 center = rect.GetCenter();
 		if (rect.IsOverlappingWith(ballRect)) {
-			ball.ReboundY();
+			if (ball.center.x > rect.right) {
+				ball.ReboundX();
+				ball.center.x += rect.right - ballRect.left;
+			}
+			else if (ball.center.x < rect.left) {
+				ball.ReboundX();
+				ball.center.x += rect.left - ballRect.right;
+			}
+			else if (ball.center.y > rect.bottom) {
+				ball.ReboundY();
+				ball.center.y += rect.bottom - ballRect.top;
+
+			}
+			else if (ball.center.y < rect.top){
+				ball.ReboundY();
+				ball.center.y += rect.top - ballRect.bottom;
+			}
 			health--;
 			collided = true;
 		}
